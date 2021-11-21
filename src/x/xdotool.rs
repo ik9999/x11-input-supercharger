@@ -40,6 +40,10 @@ pub fn click(down: bool, rmb: bool) {
         .unwrap();
 }
 
+pub fn middle_click() {
+    Command::new("xdotool").arg("click").arg("2").status().unwrap();
+}
+
 pub fn key(down: bool, num: u8) {
     let kind = if down { "keydown" } else { "keyup" };
     Command::new("xdotool")

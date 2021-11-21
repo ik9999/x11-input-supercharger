@@ -4,6 +4,7 @@ use serde_derive::Deserialize;
 use crate::gui::GuiThread;
 use crate::x::xdotool;
 use crate::x::xlib::{Event, XLib};
+use std::time::{Duration, Instant};
 
 #[derive(Deserialize, Clone, Debug)]
 #[serde(deny_unknown_fields)]
@@ -24,6 +25,7 @@ pub struct Scroll<'a> {
     source_id: u32,
     scroll_thread: Option<ScrollThread::Handle>,
     gui_thread: GuiThread::Handle,
+    last_event_time: Instant,
 }
 
 impl<'a> Scroll<'a> {
@@ -47,6 +49,7 @@ impl<'a> Scroll<'a> {
             source_id,
             scroll_thread: None,
             gui_thread,
+            last_event_time: Instant::now()
         }
     }
     #[allow(clippy::if_same_then_else)]
@@ -55,9 +58,13 @@ impl<'a> Scroll<'a> {
         use x11::xinput2::*;
         if ev.source_id == self.source_id && ev.detail == self.config.button_id {
             if ev.kind == XI_RawButtonPress {
+                self.last_event_time = Instant::now();
                 self.toggle();
             } else if self.config.hold && ev.kind == XI_RawButtonRelease {
                 self.toggle();
+                if Instant::now().duration_since(self.last_event_time).as_millis() < 500 {
+                    xdotool::middle_click()
+                }
             }
         } else if self.config.cancel_on_keypress && ev.kind == XI_RawKeyPress {
             if self.scroll_thread.is_some() {
@@ -67,10 +74,14 @@ impl<'a> Scroll<'a> {
     }
     pub fn toggle(&mut self) {
         if let Some(scroll_thread) = self.scroll_thread.take() {
-            self.gui_thread.send(GuiThread::Input::HideCrosshair);
+            if self.config.indicator {
+                self.gui_thread.send(GuiThread::Input::HideCrosshair);
+            }
             scroll_thread.stop();
         } else {
-            self.gui_thread.send(GuiThread::Input::ShowCrosshair);
+            if self.config.indicator {
+                self.gui_thread.send(GuiThread::Input::ShowCrosshair);
+            }
             self.scroll_thread = Some(
                 ScrollThread::Actor {
                     speed: self.config.speed as i64,
