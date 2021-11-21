@@ -9,7 +9,7 @@ use std::alloc::System;
 use std::process::Command;
 
 use crate::config::Config;
-use crate::features::keyboard_click::KeyboardClick;
+//use crate::features::keyboard_click::KeyboardClick;
 use crate::features::scroll::Scroll;
 use crate::x::xlib::XLib;
 
@@ -40,16 +40,16 @@ fn main() {
     let mut x = XLib::new();
 
     let mut scroll = config.scroll.as_ref().map(|c| Scroll::new(c, &mut x));
-    let mut keyboard_click = config
-        .keyboard_click
-        .as_ref()
-        .map(|c| KeyboardClick::new(c, &mut x));
+    //let mut keyboard_click = config
+        //.keyboard_click
+        //.as_ref()
+        //.map(|c| KeyboardClick::new(c, &mut x));
 
     let mut x = x.finish();
     loop {
         if let Some(ev) = x.poll() {
             scroll.as_mut().map(|o| o.handle(&ev));
-            keyboard_click.as_mut().map(|o| o.handle(&ev));
+            //keyboard_click.as_mut().map(|o| o.handle(&ev));
         }
     }
 }

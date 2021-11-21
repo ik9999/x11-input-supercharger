@@ -5,13 +5,13 @@
 [scroll]
 # Device with buttons. Use `xinput list` and `xinput test-xi2 --root` to
 # determine.
-device = "Wacom Bamboo Pen stylus"
+device = "Wacom Intuos S 2 Pen stylus"
 # Change it if you have many devices with the same name.
 subdevice = 0
 # `hold = false` means click once to enable, click once to disable.
 # Recommended `false` on tablets, as it's annoying when you connectivity
 # while using `hold = true`.
-hold = false
+hold = true
 # Scrolling speed. Has different effect on different screen resolutions.
 # Recommended to set `speed` to high value and decrease system-wide
 # scrolling speed as much as possible. Equation: `speed`×`distance`[px]
@@ -19,7 +19,7 @@ hold = false
 speed = 600000
 # Which button toggles scrolling. Button 2 is the middle mouse button.
 # Button 3 is upper button on Wacom Bamboo Pen.
-button_id = 3
+button_id = 50
 # Whether to show crosshair/indicator at cursor original position
 # (when the scrolling started)
 indicator = true
@@ -33,7 +33,7 @@ cancel_on_keypress = true
 [keyboard_click]
 # Device that moves or has buttons, used to determine timeout. Use
 # `xinput list` and `xinput test-xi2 --root` to determine.
-device = "Wacom Bamboo Pen stylus"
+device = "Wacom Intuos S 2 Pen stylus"
 # Change it if you have many devices with the same name.
 subdevice = 0
 # How much time must pass until keys go back to normal.
