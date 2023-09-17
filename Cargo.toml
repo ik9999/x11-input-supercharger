@@ -21,11 +21,11 @@ static_assets = "0.1.1"
 movie = "0.1.0"
 
 [dependencies.x11]
-version = "2.18.1"
+version = "2.19.1"
 features = ["xlib", "xinput"]
 
 [dependencies.gtk]
-version = "0.6.0"
+version = "0.9.2"
 features = ["v3_18"]
 
 [profile.dev]

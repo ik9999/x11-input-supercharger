@@ -13,13 +13,15 @@ actor! {
         use gtk::{init, main_iteration_do, Builder, Image, Window, WindowPosition};
         use static_assets::asset_str;
 
-        if init().is_err() {
+        let res = init();
+        if res.is_err() {
+            println!("{:?}", res);
             println!("Failed to initialize GTK.");
             return;
         }
 
         let glade_src = &asset_str!("src/ui.glade");
-        let builder = Builder::new_from_string(glade_src);
+        let builder = Builder::from_string(glade_src);
 
         let crosshair: Window = builder.get_object("crosshair").unwrap();
         let icon: Image = builder.get_object("crosshair_icon").unwrap();

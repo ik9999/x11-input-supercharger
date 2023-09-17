@@ -16,7 +16,7 @@ hold = true
 # Recommended to set `speed` to high value and decrease system-wide
 # scrolling speed as much as possible. Equation: `speed`×`distance`[px]
 # ÷1_000_000_000 = emulated mouse wheel rolls.
-speed = 600000
+speed = 2000000
 # Which button toggles scrolling. Button 2 is the middle mouse button.
 # Button 3 is upper button on Wacom Bamboo Pen.
 button_id = 50

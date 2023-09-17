@@ -62,7 +62,7 @@ impl<'a> Scroll<'a> {
                 self.toggle();
             } else if self.config.hold && ev.kind == XI_RawButtonRelease {
                 self.toggle();
-                if Instant::now().duration_since(self.last_event_time).as_millis() < 500 {
+                if Instant::now().duration_since(self.last_event_time).as_millis() < 200 {
                     xdotool::middle_click()
                 }
             }
